@@ -23,7 +23,7 @@ The analysis was performed using postgreSQL, with normalized tables and advanced
 
 The project starts by creating a database named 'Pizza_Sales Project SQL.db'. A table called 'pizza_sales_clean' is created to store the pizza sales data.
   
-'''sql
+```sql
 CREATE DATABASE Pizza_Sales Project SQL.db;
 
 -- Create pizza_sales_clean table
@@ -47,13 +47,13 @@ CREATE TABLE pizza_sales_clean
       
 SELECT *
 FROM pizza_sales_clean;
-'''
+```
 
 ### 2. Data cleaning
 
 Check for any null values in the dataset and delete records with missing data.
 
-'''sql
+```sql
 -- Checking for duplicates and null values
 
 SELECT * 
@@ -85,7 +85,7 @@ WHERE
 
 SELECT COUNT (*)
 FROM pizza_sales_clean;
-'''
+```
 
 ### 3. Normalization
 
@@ -96,7 +96,7 @@ The 'pizza_sales_clean' table was normalized into the following tables:
 - **foreign key**: foreign keys order_id and pizza_id were created on the order_details table
 This structure minimizes redundancy and reflects real-world relational database design.
 
-'''sql
+```sql
 -- Create Orders Table
 
 DROP TABLE IF EXISTS orders;
@@ -106,9 +106,9 @@ CREATE TABLE orders
     order_date DATE,
     order_time TIME
   );
-'''
+```
 
-'''sql
+```sql
 -- Create Pizzas Table
 
 DROP TABLE IF EXISTS pizzas;
@@ -120,9 +120,9 @@ CREATE TABLE pizzas
     pizza_category VARCHAR(15),
     pizza_ingredients VARCHAR(255)
   );
-  '''
+  ```
   
-  '''sql
+  ```sql
 -- Create Order_details Table
 
 DROP TABLE IF EXISTS order_details;
@@ -136,9 +136,9 @@ CREATE TABLE order_details (
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (pizza_id) REFERENCES pizzas(pizza_id)
 );
-'''
+```
 
-'''sql
+```sql
 -- Insert data into orders table
 
 INSERT INTO orders (order_id, order_date, order_time)
@@ -153,9 +153,9 @@ FROM orders;
 
 SELECT COUNT (*)
 FROM orders;
-'''
+```
 
-'''sql
+```sql
 -- Insert data into pizzas table
 
 INSERT INTO pizzas (pizza_id, pizza_name, pizza_size, pizza_category, pizza_ingredients)
@@ -169,9 +169,9 @@ FROM pizza_sales_clean;
 
 SELECT *
 FROM pizzas;
-'''
+```
 
-'''sql
+```sql
 -- Insert data into order_details table
 
 INSERT INTO order_details (order_id, pizza_id, quantity, unit_price, total_price)
@@ -181,15 +181,15 @@ SELECT order_id,
 		unit_price, 
 		total_price
 FROM pizza_sales_clean;
-'''
+```
 
-'''sql
+```sql
 -- Validation 
 SELECT COUNT(*) AS orphan_records
 FROM order_details
 WHERE order_id NOT IN (SELECT order_id FROM orders)
    OR pizza_id NOT IN (SELECT pizza_id FROM pizzas);
-'''
+```
 
 ### 4. Exploratory Data Analysis
 
@@ -197,7 +197,7 @@ WHERE order_id NOT IN (SELECT order_id FROM orders)
 - Customer Count: Find out how many unique customers are in the dataset.
 - Category Count: Identify all unique pizzas in the dataset.
 
-'''sql
+```sql
 -- How many orders did we have in total?
 
 SELECT COUNT(*) AS total_orders 
@@ -217,14 +217,14 @@ FROM pizzas;
 
 SELECT COUNT (DISTINCT pizza_name) AS total_unique_pizzas
 FROM pizzas;
-'''
+```
 
 ### 5. Business Analysis
 
 The following SQL queries were developed to answer specific business questions:
 
 a. **What is the total revenue and average order value (AOV)?**
-'''sql
+```sql
 WITH order_totals AS 
   (
     SELECT
@@ -237,10 +237,10 @@ SELECT
     SUM(order_value) AS total_revenue,
     ROUND(AVG(order_value)::numeric, 2) AS average_order_value
 FROM order_totals;
-'''
+```
 
 b. **How is revenue distributed across pizzas, and what percentage does each contribute?**
-'''sql
+```sql
 WITH revenue_by_pizza AS 
   (
     SELECT
@@ -262,10 +262,10 @@ SELECT
 FROM revenue_by_pizza r
 CROSS JOIN total_revenue t
 ORDER BY revenue_percentage DESC;
-'''
+```
 
 c. **Which pizzas generate the most revenue (Top 10 best sellers)?**
-'''sql
+```sql
 WITH pizza_revenue AS 
   (
     SELECT
@@ -279,10 +279,10 @@ SELECT *
 FROM pizza_revenue
 ORDER BY revenue DESC
 LIMIT 10;
-'''
+```
 
 d. **How much of each pizza category was sold, and which categories are the top performers in terms of quantity sold?**
-'''sql
+```sql
 SELECT
     pizza_category,
     SUM(quantity) AS total_units_sold
@@ -290,10 +290,10 @@ FROM pizzas p
 JOIN order_details od ON p.pizza_id = od.pizza_id
 GROUP BY pizza_category
 ORDER BY total_units_sold DESC;
-'''
+```
 
 e. **Which combinations of pizza category and size generate the most revenue?**
-'''sql
+```sql
 SELECT
     p.pizza_category,
     p.pizza_size,
@@ -302,10 +302,10 @@ FROM order_details od
 JOIN pizzas p ON od.pizza_id = p.pizza_id
 GROUP BY p.pizza_category, p.pizza_size
 ORDER BY revenue DESC;
-'''
+```
 
 f. **Which pizzas are underperforming and may need to be reconsidered?**
-'''sql
+```sql
 WITH pizza_performance AS 
   (
     SELECT
@@ -323,10 +323,10 @@ WHERE total_revenue <
     SELECT AVG(total_revenue) FROM pizza_performance
   )
 ORDER BY total_revenue;
-'''
+```
 
 g. **Which ingredients are most common in top-selling and high-revenue pizzas?**
-'''sql
+```sql
 WITH pizza_revenue AS 
 (
     SELECT
@@ -350,10 +350,10 @@ SELECT
 FROM high_revenue_pizzas
 GROUP BY ingredient
 ORDER BY appearance_count DESC;
-'''
+```
 
 h. **Which hours of the day generate the most pizza orders, and how does customer demand differ between peak and off-peak periods?**
-'''sql
+```sql
 WITH hourly_orders AS 
 (
     SELECT
@@ -377,10 +377,10 @@ hourly_classification AS (
 SELECT *
 FROM hourly_classification
 ORDER BY total_orders DESC;
-'''
+```
 
 i. **Which days of the week consistently generate the highest and lowest revenue?**
-'''sql
+```sql
 SELECT
     TO_CHAR(o.order_date, 'Day') AS day_of_week,
     ROUND(SUM(od.total_price)::numeric,2) AS total_revenue
@@ -388,10 +388,10 @@ FROM orders o
 JOIN order_details od ON o.order_id = od.order_id
 GROUP BY day_of_week
 ORDER BY total_revenue DESC;
-'''
+```
 
 j. **Are there seasonal patterns in monthly sales trends?**
-'''sql
+```sql
 SELECT
     TO_CHAR(o.order_date, 'Month') AS month_name,
     ROUND(SUM(od.total_price)::numeric, 2) AS monthly_revenue
@@ -399,10 +399,10 @@ FROM orders o
 JOIN order_details od ON o.order_id = od.order_id
 GROUP BY month_name, EXTRACT(MONTH FROM o.order_date)
 ORDER BY EXTRACT(MONTH FROM o.order_date);
-'''
+```
 
 k. **Which pizzas should be prioritized for marketing and promotions based on a combination of high revenue and consistent order frequency?**
-'''sql
+```sql
 WITH pizza_metrics AS (
     SELECT
         p.pizza_name,
@@ -426,10 +426,10 @@ FROM ranked_pizzas
 WHERE revenue_rank <= 10
   AND frequency_rank <= 10
 ORDER BY revenue_rank, frequency_rank;
-'''
+```
 
 l. **How many orders fall into low, medium, and high-value segments, and what does this reveal about customer spending patterns?**
-'''sql
+```sql
 WITH order_totals AS (
     SELECT
         order_id,
@@ -446,7 +446,7 @@ SELECT
     COUNT(*) AS number_of_orders
 FROM order_totals
 GROUP BY order_segment;
-'''
+```
 
 ## Findings and Business Implications
 1. Total revenue for the period was $1,635,720.10, with an average order value of $76.61.
