@@ -3,7 +3,9 @@
 ## Project Overview
 
 **Project Title**: Pizza Sales Analysis Using SQL
+
 **Level**: Intermediate
+
 **Database**: 'Pizza_Sales Project SQL.db'
 
 This project analyzes transactional pizza sales data to uncover insights related to revenue performance, product demand, and customer ordering patterns. The goal is to demonstrate strong SQL skills, business reasoning, and the ability to translate raw data into actionable insights for decision-making.
