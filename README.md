@@ -512,7 +512,6 @@ As part of my portfolio, this project demonstrates my ability to use SQL to anal
 Stay Updated and Join the Community
 For more content on SQL, data analysis, and other data-related topics, make sure to follow me on social media and join our community:
 
-LinkedIn: Connect with me professionally [LinkedIn](www.linkedin.com/in/fiyinfoluwa-olusuyi-805603218)
-
+LinkedIn:[Connect with me professionally](www.linkedin.com/in/fiyinfoluwa-olusuyi-805603218)
 
 I look forward to connecting with you!
