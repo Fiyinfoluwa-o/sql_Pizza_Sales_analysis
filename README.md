@@ -512,6 +512,6 @@ This analysis highlights clear patterns in pizza sales, showing that revenue is 
 As part of my portfolio, this project demonstrates my ability to use SQL to analyze data and generate actionable insights. I’d love to hear your thoughts, feedback, or discuss potential collaboration opportunities.
 
 
-LinkedIn: [Connect with me professionally](https://www.linkedin.com/in/yourprofile)
+LinkedIn: [Connect with me professionally](www.linkedin.com/in/fiyinfoluwa-olusuyi-805603218)
 
 I look forward to connecting with you!
