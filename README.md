@@ -463,8 +463,7 @@ GROUP BY order_segment;
 
 - These best-sellers should be prioritized in menu placement, marketing campaigns, and inventory management to maintain steady revenue flow.
 
-4. Finding:
-The “Classic” category leads in total units sold with 29,776, followed by “Supreme” (23,974), “Veggie” (23,298), and “Chicken” (22,100).
+4. The “Classic” category leads in total units sold with 29,776, followed by “Supreme” (23,974), “Veggie” (23,298), and “Chicken” (22,100).
 
 - Classic pizzas are clearly the most popular among customers, suggesting they should remain a focal point for promotions and inventory planning. Other categories like Supreme, Veggie, and Chicken still contribute significantly and can be targeted with marketing campaigns to boost sales further.
 
